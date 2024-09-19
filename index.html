@@ -6,22 +6,90 @@
     <title>JAG | Random Poems</title>
 
         <!-- Bootstrap Core -->
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 <body>
     
 <!-- Look into PoetryDB for this api assignment -->
 
+<div class="d-flex flex-column h-100">
+
+    <header>
+        <!-- navbar is responsive and changes based on screen size -->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <!-- 
+    navbar: Bootstrap class for styling navigation bars.
+    navbar-expand-md: The navbar will be horizontal on medium (md) devices and larger, and collapsible on smaller screens.
+    navbar-dark: Indicates dark-colored text for the navigation bar links.
+    bg-dark: Sets the background color of the navbar to dark.
+    -->
+            <div class="container-fluid">
+                <!-- container-fluid: Makes the container width span the entire viewport width. -->
+                <a class="navbar-brand" href="#">API Test</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- 
+            navbar-toggler: Styles the button that toggles the navbar on small screens.
+            data-bs-toggle="collapse": Bootstrap data attribute for collapsing and expanding content.
+            data-bs-target="#navbarNav": Targets the element with id="navbarNav" for the toggle action.
+            -->
+                    <span class="navbar-toggler-icon"></span>
+                    <!-- navbar-toggler-icon: Adds an icon for the toggle button. -->
+                </button>
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- collapse: Hides the content on small screens and shows it when toggled or on larger screens.
+            navbar-collapse: Styles the collapsible part of the navbar. -->
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://www.linkedin.com/in/jag1997/" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/Exo-MDR-CD2000" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+
+    
 
 
 
 
 
 
+    <footer class="footer mt-auto py-3 bg-dark-subtle text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <span class="text-muted fst-italic">&copy; 2024 J.A.G</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
 
+
+</div>
     <!-- Bootstrap JS & Popper -->
-    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
