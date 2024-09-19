@@ -1,0 +1,45 @@
+[
+    {
+        "title": "Test Poem",
+        "author": "Test Author",
+        "lines": [
+            "Is the poem fetched or lost in code,",
+            "Did the API yield what it showed?",
+            "In JSON fields, the words await,",
+            "But syntax errors tempt their fate.",
+            "",
+            "With async dreams, we call once more,",
+            "Debugging logs, the endless chore.",
+            "Oh fetch, succeed—let poems flow,",
+            "So all my testing woes can go."
+        ],
+        "linecount": "9"
+    },
+    {
+        "title": "To Mr Thomas Southern, on His Birthday, 1742.",
+        "author": "Alexander Pope",
+        "lines": [
+            "Resign'd to live, prepared to die,",
+            "With not one sin, but poetry,",
+            "This day Tom's fair account has run",
+            "(Without a blot) to eighty-one.",
+            "Kind Boyle, before his poet lays",
+            "A table, with a cloth of bays;",
+            "And Ireland, mother of sweet singers,",
+            "Presents her harp still to his fingers.",
+            "The feast, his towering genius marks",
+            "In yonder wild goose and the larks;",
+            "The mushrooms show his wit was sudden;",
+            "And for his judgment, lo, a pudden!",
+            "Roast beef, though old, proclaims him stout,",
+            "And grace, although a bard, devout.",
+            "May Tom, whom Heaven sent down to raise",
+            "The price of prologues and of plays,",
+            "Be every birthday more a winner,",
+            "Digest his thirty-thousandth dinner;",
+            "Walk to his grave without reproach,",
+            "And scorn a rascal and a coach."
+        ],
+        "linecount": "20"
+    }
+]
