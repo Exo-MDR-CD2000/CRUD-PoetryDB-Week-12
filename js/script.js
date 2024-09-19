@@ -28,3 +28,8 @@ async function fetchPoems() {
 
 fetchPoems();
 
+/** 
+ * Based on the PoetryDB Raw JSON, several poems are returned in an array.
+ * Title, Author, Lines, and Linecount are the properties of each poem.
+ * There is also extra information for poems longer than 100 lines i think.
+*/
