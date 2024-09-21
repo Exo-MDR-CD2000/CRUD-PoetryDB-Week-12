@@ -178,25 +178,25 @@
 
             <!-- Search Form Section -->
             <form id="poemSearchForm">
-                <h2 class="mb-4">Search For Poems</h2>
+                <h2 class="mb-4">Search By Poem Or Poet</h2>
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label for="title" class="form-label">Poem
-                            Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter poem title">
+                        <label for="title" class="form-label">Poem Title</label>
+                        <select class="form-select" id="title">
+                            <option value="">Select a poem title</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <label for="author" class="form-label">Author</label>
-                        <input type="text" class="form-control" id="author" placeholder="Enter author name">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="linecount" class="form-label">Line
-                            Count</label>
-                        <input type="number" class="form-control" id="linecount" placeholder="Enter line count">
+                        <select class="form-select" id="author">
+                            <option value="">Select an author</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Search
-                    Poem</button>
+                <button type="submit" class="btn btn-primary">Search Poem</button>
+                <button type="button" class="btn btn-secondary" id="clearResults">Clear Results</button>
             </form>
 
             <!-- Results Section -->
@@ -224,8 +224,7 @@
                             placeholder="Enter poem lines, separated by new lines"></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">Add
-                    Poem</button>
+                <button type="submit" class="btn btn-success">Add Poem</button>
             </form>
 
             <hr class="my-4">
