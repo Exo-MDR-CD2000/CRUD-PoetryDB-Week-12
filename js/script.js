@@ -33,3 +33,132 @@ fetchPoems();
  * Title, Author, Lines, and Linecount are the properties of each poem.
  * There is also extra information for poems longer than 100 lines i think.
 */
+
+document.addEventListener('DOMContentLoaded', async function() {
+    const searchForm = document.getElementById('poemSearchForm');
+    const addPoemForm = document.getElementById('addPoemForm');
+    const resultsDiv = document.getElementById('results');
+    const titleSelect = document.getElementById('title');
+    const authorSelect = document.getElementById('author');
+    const clearResultsButton = document.getElementById('clearResults');
+
+    // Fetch and populate dropdown options
+    async function populateDropdowns() {
+        try {
+            const [titlesResponse, authorsResponse] = await Promise.all([
+                fetch('https://poetrydb.org/title'),
+                fetch('https://poetrydb.org/author')
+            ]);
+
+            const titlesData = await titlesResponse.json();
+            const authorsData = await authorsResponse.json();
+
+            // Populate titles dropdown
+            titlesData.titles.forEach(title => {
+                const option = document.createElement('option');
+                option.value = title;
+                option.textContent = title;
+                titleSelect.appendChild(option);
+            });
+
+            // Populate authors dropdown
+            authorsData.authors.forEach(author => {
+                const option = document.createElement('option');
+                option.value = author;
+                option.textContent = author;
+                authorSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching dropdown options:', error);
+        }
+    }
+
+    // Call the function to populate dropdowns
+    populateDropdowns();
+
+    // Function to handle search form submission
+    searchForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const title = titleSelect.value;
+        const author = authorSelect.value;
+
+        try {
+            let url = 'https://poetrydb.org/';
+            if (title && author) {
+                url += `author,title/${author};${title}`;
+            } else if (title) {
+                url += `title/${title}`;
+            } else if (author) {
+                url += `author/${author}`;
+            } else {
+                resultsDiv.innerHTML = '<p>Please select a title or author to search.</p>';
+                return;
+            }
+
+            console.log('Fetching URL:', url); // Debugging log
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log('Fetched Data:', data); // Debugging log
+            displayResults(data);
+        } catch (error) {
+            console.error('Error fetching poem:', error);
+        }
+    });
+
+    function displayResults(data) {
+        resultsDiv.innerHTML = '';
+        if (data.length === 0) {
+            resultsDiv.innerHTML = '<p>No poems found.</p>';
+            return;
+        }
+    
+        // Create the table structure
+        const table = document.createElement('table');
+        table.className = 'table table-bordered table-striped table-hover table-sm';
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Line Count</th>
+                    <th>Poem</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        `;
+    
+        const tbody = table.querySelector('tbody');
+    
+        // Populate the table with poem data
+        data.forEach((poem, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${poem.title}</td>
+                <td>${poem.author}</td>
+                <td>${poem.linecount}</td>
+                <td>
+                    ${poem.lines.length > 6 ? `
+                        <a class="btn btn-link" data-bs-toggle="collapse" href="#collapsePoem${index}" role="button" aria-expanded="false" aria-controls="collapsePoem${index}">
+                            Show Poem
+                        </a>
+                        <div class="collapse" id="collapsePoem${index}">
+                            ${poem.lines.join('<br>')}
+                        </div>
+                    ` : poem.lines.join('<br>')}
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    
+        resultsDiv.appendChild(table);
+    }
+
+    // Function to clear results and reset the form
+    clearResultsButton.addEventListener('click', function() {
+        resultsDiv.innerHTML = '';
+        searchForm.reset();
+        // titleSelect.innerHTML = '<option value="">Select a poem title</option>';
+        // titleSelect.disabled = false;
+    });
+});
