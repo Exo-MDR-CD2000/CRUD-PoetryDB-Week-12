@@ -118,10 +118,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         table.innerHTML = `
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Line Count</th>
-                    <th>Poem</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Line Count</th>
+                    <th scope="col">Poem</th>
+                    <th scope="col">Save</th>
                 </tr>
             </thead>
             <tbody>
@@ -137,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 <td>${poem.title}</td>
                 <td>${poem.author}</td>
                 <td>${poem.linecount}</td>
-                <td>
+                <td class="poem-column">
                     ${poem.lines.length > 6 ? `
                         <a class="btn btn-link" data-bs-toggle="collapse" href="#collapsePoem${index}" role="button" aria-expanded="false" aria-controls="collapsePoem${index}">
                             Show Poem
@@ -147,11 +148,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     ` : poem.lines.join('<br>')}
                 </td>
+                <td>
+                    <button class="btn btn-success save-poem" data-poem-index="${index}">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                 </td>
             `;
             tbody.appendChild(row);
         });
     
-        resultsDiv.appendChild(table);
+        // Wrap the table in a responsive div
+        const responsiveDiv = document.createElement('div');
+        responsiveDiv.className = 'table-responsive';
+        responsiveDiv.appendChild(table);
+
+        resultsDiv.appendChild(responsiveDiv);
     }
 
     // Function to clear results and reset the form
