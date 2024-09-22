@@ -19,7 +19,7 @@ function initializeRandomPoemGenerator() {
                 }
 
                 const data = await response.json();
-                const poem = data[0];
+                const poem = data[0]; // the array of zero index is the poem object
 
                 // Add HTML to the page
                 const poemCardRandomHTML = `
