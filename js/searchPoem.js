@@ -14,10 +14,10 @@ async function fetchPoems() {
     try {
         const response = await fetch('https://poetrydb.org/random/1');
         const rawJson = await response.text(); // Get the raw JSON as a string
-        console.log('Raw JSON:', rawJson);
+        // console.log('Raw JSON:', rawJson);
 
         const poems = JSON.parse(rawJson); // Parse the raw JSON string into an object
-        console.log('Parsed JSON:', poems);
+        // console.log('Parsed JSON:', poems);
 
         // Display the poems (assuming you have a function for rendering them)
         // displayPoems(poems);
