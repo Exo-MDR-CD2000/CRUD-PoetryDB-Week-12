@@ -28,6 +28,14 @@ async function fetchPoems() {
 
 fetchPoems();
 
+
+    const searchForm = document.getElementById('poemSearchForm');
+    const addPoemForm = document.getElementById('addPoemForm');
+    const resultsDiv = document.getElementById('results');
+    const titleSelect = document.getElementById('title');
+    const authorSelect = document.getElementById('author');
+    const clearResultsButton = document.getElementById('clearResults');
+
 /** 
  * Based on the PoetryDB Raw JSON, several poems are returned in an array.
  * Title, Author, Lines, and Linecount are the properties of each poem.
@@ -35,12 +43,6 @@ fetchPoems();
 */
 
 document.addEventListener('DOMContentLoaded', async function() {
-    const searchForm = document.getElementById('poemSearchForm');
-    const addPoemForm = document.getElementById('addPoemForm');
-    const resultsDiv = document.getElementById('results');
-    const titleSelect = document.getElementById('title');
-    const authorSelect = document.getElementById('author');
-    const clearResultsButton = document.getElementById('clearResults');
 
     // Fetch and populate dropdown options
     async function populateDropdowns() {
