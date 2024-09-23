@@ -71,3 +71,15 @@ function initializeRandomPoemGenerator() {
 
 // Initialize the random poem generator
 initializeRandomPoemGenerator();
+
+
+
+/**
+ * The above function combines several functions to fetch a random poem from the PoetryDB API and display it on the page.
+ * The overall fx is labeled initializeRandomPoemGenerator and is called at the end of the file.
+ * There is one larger fx inside which is an event listener for the domcontentloaded event (makes sure the page is fully loaded).
+ * The fetchRandomPoem fx is an async function that fetches a random poem from the PoetryDB API.
+ * Then the generatePoemHTML fx is called with the poem object as an argument.
+ * The generatePoemHTML fx creates an HTML string with the poem data and inserts it into the page.
+ * Then there are two event listeners: one for the randomPoemButton click event and one for the trashButton click event.
+ */
