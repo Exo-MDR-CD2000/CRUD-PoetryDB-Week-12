@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     // Function to handle saving a poem
-    function handleSavePoem(event) {
+    async function handleSavePoem(event) {
         event.preventDefault();
         console.log('Save button clicked'); // Debugging log
 
@@ -192,31 +192,38 @@ document.addEventListener('DOMContentLoaded', async function() {
             const poem = searchResults[index]; // Access the corresponding poem from global searchResults array
             console.log('Poem to save:', poem); // Debugging log
 
-            // Add an ID to the poem if it doesn't already have one
-            poem.id = poem.id || Date.now(); // Generate a unique ID using current timestamp
-            event.preventDefault();
-
-            fetch('http://localhost:3000/savedPoems', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(poem)
-            })
-            .then(response => {
+            try {
+                // Fetch existing poems to determine the next ID
+                const response = await fetch('http://localhost:3000/savedPoems');
                 if (!response.ok) {
+                    throw new Error('Error fetching existing poems');
+                }
+                const existingPoems = await response.json();
+
+                // Determine the highest ID among existing poems
+                const highestId = existingPoems.reduce((maxId, poem) => Math.max(maxId, poem.id || 0), 0);
+                // Assign the new poem an ID that is one greater than the highest existing ID
+                poem.id = highestId + 1;
+
+                // Save the new poem to the database
+                const saveResponse = await fetch('http://localhost:3000/savedPoems', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(poem)
+                });
+                if (!saveResponse.ok) {
                     throw new Error('Error saving poem');
                 }
-                return response.json();
-            })
-            .then(data => {
+                const data = await saveResponse.json();
                 console.log('Poem saved:', data); // Debugging log
                 displaySavedPoems(); // Call the function to display the saved poems
-            })
-            .catch(error => console.error('Error saving poem:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     }
-
     // Function to display saved poems
     function displaySavedPoems() {
         fetch('http://localhost:3000/savedPoems')
@@ -225,8 +232,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 console.log('Fetched saved poems:', poems); // Debugging log
                 const savedPoemsContainerSmall = document.getElementById('poemCardsContainer');
                 const savedPoemsContainerLarge = document.getElementById('poemCardsContainerLarge');
-                savedPoemsContainerSmall.innerHTML = ''; // Clear previous saved poems
-                savedPoemsContainerLarge.innerHTML = ''; // Clear previous saved poems
+                // savedPoemsContainerSmall.innerHTML = ''; // Clear previous saved poems
+                // savedPoemsContainerLarge.innerHTML = ''; // Clear previous saved poems
+
+                console.log('Rendering poem with ID:', poem.id); // Debugging log
 
                 poems.forEach(poem => {
                     const cardSmall = document.createElement('div');
@@ -238,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <h6 class="card-subtitle mb-2 text-muted">${poem.author}</h6>
                                 <p class="card-text">Line Count: ${poem.linecount}</p>
                                 <p class="card-text">${poem.lines.join('<br>')}</p>
-                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-poem">
+                                <button class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2 delete-poem" data-id="${poem.id}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -255,7 +264,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                                 <h6 class="card-subtitle mb-2 text-muted">${poem.author}</h6>
                                 <p class="card-text">Line Count: ${poem.linecount}</p>
                                 <p class="card-text">${poem.lines.join('<br>')}</p>
-                                <button class="btn btn-danger btn-lg-1 position-absolute top-0 end-0 m-2 delete-poem">
+                                <button class="btn btn-danger btn-lg-1 position-absolute top-0 end-0 m-2 delete-poem" data-id="${poem.id}">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </div>
@@ -274,6 +283,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
 
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-poem') || event.target.closest('.delete-poem')) {
+            const button = event.target.closest('.delete-poem');
+            const poemId = button.getAttribute('data-id');
+            const card = button.closest('.card');
+
+            console.log('Delete button clicked for poem with ID:', poemId); // Debugging log
+    
+            // Remove the poem from the DOM
+            card.remove();
+    
+            // Send DELETE request to json-server
+            fetch(`http://localhost:3000/savedPoems/${poemId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete poem from the database');
+                }
+                console.log(`Poem with id ${poemId} deleted successfully`);
+            })
+            .catch(error => console.error('Error deleting poem:', error));
+        }
+    });
+
     // Initial call to display saved poems on page load
     displaySavedPoems();
 });
+
+// remove current method of adding id to poem's in database. change the method of adding an id by assigning a unique id to each poem in the database in increments of 1.
