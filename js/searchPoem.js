@@ -285,6 +285,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         });
         
+        // event listener for delete buttons
         document.addEventListener('click', async event => {
             if (event.target.classList.contains('delete-poem') || event.target.closest('.delete-poem')) {
                 const button = event.target.closest('.delete-poem');
