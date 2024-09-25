@@ -27,11 +27,12 @@ To get a local copy up and running follow these simple steps:
     Open with live server
     ```
 5. **Have another terminal window open for local db**
+    - Run this command to start a local db:
     ```sh
-    Run this command to start local db: json-server --watch db/db.json
-    The above command should be run inside the project repository.
+    json-server --watch db/db.json
     ```
-6. **Test the page in your web browser**
+    - The above command should be run inside the project repository.
+1. **Test the page in your web browser**
 
 
 ## Link(s)
