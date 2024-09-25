@@ -31,7 +31,7 @@ To get a local copy up and running follow these simple steps:
     ```sh
     json-server --watch db/db.json
     ```
-    - The above command should be run inside the project repository.
+    - The above command should be run inside the root of the project repository.
 1. **Test the page in your web browser**
 
 
