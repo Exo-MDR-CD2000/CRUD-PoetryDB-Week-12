@@ -314,5 +314,3 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Initial call to display saved poems on page load
     displaySavedPoems();
 });
-
-// remove current method of adding id to poem's in database. change the method of adding an id by assigning a unique id to each poem in the database in increments of 1.
