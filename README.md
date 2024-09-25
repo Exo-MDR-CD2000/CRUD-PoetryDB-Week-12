@@ -1,4 +1,4 @@
-# api-project-week-12
+# PoetryDB CRUD App
 CRUD Project (without the update) using PoetryDB
 ## Description
 
