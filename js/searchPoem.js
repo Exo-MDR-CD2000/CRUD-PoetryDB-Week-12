@@ -38,7 +38,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
 
     const searchForm = document.getElementById('poemSearchForm');
-    const addPoemForm = document.getElementById('addPoemForm');
+    // const addPoemForm = document.getElementById('addPoemForm');
     const resultsDiv = document.getElementById('results');
     const titleSelect = document.getElementById('title');
     const authorSelect = document.getElementById('author');
@@ -224,20 +224,21 @@ document.addEventListener('DOMContentLoaded', async function() {
             }
         }
     }
-    // Function to display saved poems
-    function displaySavedPoems() {
-        fetch('http://localhost:3000/savedPoems')
-            .then(response => response.json())
-            .then(poems => {
+        // Function to display saved poems
+        const displaySavedPoems = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/savedPoems');
+                const poems = await response.json();
                 console.log('Fetched saved poems:', poems); // Debugging log
+        
                 const savedPoemsContainerSmall = document.getElementById('poemCardsContainer');
                 const savedPoemsContainerLarge = document.getElementById('poemCardsContainerLarge');
                 // savedPoemsContainerSmall.innerHTML = ''; // Clear previous saved poems
                 // savedPoemsContainerLarge.innerHTML = ''; // Clear previous saved poems
-
-                console.log('Rendering poem with ID:', poem.id); // Debugging log
-
+        
                 poems.forEach(poem => {
+                    console.log('Rendering poem with ID:', poem.id); // Debugging log
+        
                     const cardSmall = document.createElement('div');
                     cardSmall.className = 'col-md-6 col-lg-4 mb-4';
                     cardSmall.innerHTML = `
@@ -254,7 +255,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                         </div>
                     `;
                     savedPoemsContainerSmall.appendChild(cardSmall);
-
+        
                     const cardLarge = document.createElement('div');
                     cardLarge.className = 'col-md-8 mb-4';
                     cardLarge.innerHTML = `
@@ -272,41 +273,43 @@ document.addEventListener('DOMContentLoaded', async function() {
                     `;
                     savedPoemsContainerLarge.appendChild(cardLarge);
                 });
-            })
-            .catch(error => console.error('Error fetching saved poems:', error));
-    }
-
-    // Add event listener to the save buttons
-    document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('save-poem') || event.target.closest('.save-poem')) {
-            handleSavePoem(event);
-        }
-    });
-
-    document.addEventListener('click', function(event) {
-        if (event.target.classList.contains('delete-poem') || event.target.closest('.delete-poem')) {
-            const button = event.target.closest('.delete-poem');
-            const poemId = button.getAttribute('data-id');
-            const card = button.closest('.card');
-
-            console.log('Delete button clicked for poem with ID:', poemId); // Debugging log
-    
-            // Remove the poem from the DOM
-            card.remove();
-    
-            // Send DELETE request to json-server
-            fetch(`http://localhost:3000/savedPoems/${poemId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to delete poem from the database');
+            } catch (error) {
+                console.error('Error fetching saved poems:', error);
+            }
+        };
+        
+        // Add event listener to the save buttons
+        document.addEventListener('click', event => {
+            if (event.target.classList.contains('save-poem') || event.target.closest('.save-poem')) {
+                handleSavePoem(event);
+            }
+        });
+        
+        document.addEventListener('click', async event => {
+            if (event.target.classList.contains('delete-poem') || event.target.closest('.delete-poem')) {
+                const button = event.target.closest('.delete-poem');
+                const poemId = button.getAttribute('data-id');
+                const card = button.closest('.card');
+        
+                console.log('Delete button clicked for poem with ID:', poemId); // Debugging log
+        
+                // Remove the poem from the DOM
+                card.remove();
+        
+                // Send DELETE request to json-server
+                try {
+                    const response = await fetch(`http://localhost:3000/savedPoems/${poemId}`, {
+                        method: 'DELETE'
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to delete poem from the database');
+                    }
+                    console.log(`Poem with id ${poemId} deleted successfully`);
+                } catch (error) {
+                    console.error('Error deleting poem:', error);
                 }
-                console.log(`Poem with id ${poemId} deleted successfully`);
-            })
-            .catch(error => console.error('Error deleting poem:', error));
-        }
-    });
+            }
+        });
 
     // Initial call to display saved poems on page load
     displaySavedPoems();
