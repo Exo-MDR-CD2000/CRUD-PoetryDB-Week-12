@@ -160,3 +160,5 @@ document.addEventListener('DOMContentLoaded', function () {
 //         console.error('Error fetching saved poems:', error);
 //     }
 // };
+
+//TODO - look into debugging when all poems are deleted from the db.

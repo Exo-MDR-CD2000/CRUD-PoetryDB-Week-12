@@ -176,13 +176,13 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Function to clear results and reset the form
     clearResultsButton.addEventListener('click', function() {
-        resultsDiv.innerHTML = '';
+        resultsDiv.innerHTML = ''; // TODO: not best practice. Look into better ways to clear elements as this can cause memory leaks
         searchForm.reset();
     });
 
     // Function to handle saving a poem
     async function handleSavePoem(event) {
-        event.preventDefault();
+        // event.preventDefault();
         console.log('Save button clicked'); // Debugging log
 
         if (event.target.classList.contains('save-poem')) {
