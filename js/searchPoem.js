@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         event.preventDefault();
         const title = titleSelect.value;
         const author = authorSelect.value;
+        console.log('Title:', title, 'Author:', author); // Debugging log
 
         try {
             let url = 'https://poetrydb.org/';
@@ -115,6 +116,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     function displayResults(data) {
+        console.log('Search Results:', searchResults); // Debugging log
         resultsDiv.innerHTML = '';
         if (data.length === 0) {
             resultsDiv.innerHTML = '<p>No poems found.</p>';
